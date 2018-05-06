@@ -2526,7 +2526,6 @@ body, html {
   transition: all 0.3s cubic-bezier(0.15, 1, 0.33, 1);
   animation-delay: 0.5s;
   background-image: none;
-  padding-bottom: 20;
   background-size: contain;
   background-position: bottom; }
 
@@ -2552,6 +2551,12 @@ body, html {
     flex-direction: column;
     padding: 16px 0 16px;
     width: 64px; }
+  .navigator .nav {
+    margin-top: 40px;
+    text-align: center; }
+  .navigator .nav-image-item {
+    margin: 12px 0;
+    cursor: pointer; }
   .navigator .tabs-container {
     flex-grow: 1;
     flex-shrink: 1;
@@ -2566,17 +2571,40 @@ body, html {
     background-color: transparent;
     color: #42526E;
     text-decoration: none;
-    padding: 8px 4px 8px 4px; }
+    padding: 8px 0; }
   .navigator .tabs {
     display: flex;
     background-color: #F4F5F7;
     color: #42526E;
     flex-direction: column;
-    padding-top: 16px;
+    padding: 20px;
     width: 100%; }
+  .navigator .tabs-list {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 100%;
+    overflow: hidden;
+    position: relative; }
+  .navigator .tabs-list-item {
+    align-items: center;
+    border-radius: 3px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    flex: none;
+    color: #42526E;
+    padding: 8px;
+    text-decoration: none;
+    height: 36px;
+    font-size: 14px; }
+    .navigator .tabs-list-item:hover, .navigator .tabs-list-item.active {
+      background-color: rgba(9, 30, 66, 0.04); }
+
+.body-container {
+  flex: 1 1 auto;
+  padding: 3rem; }
 
 .body {
-  flex: 1 1 auto;
   position: relative;
   z-index: 1; }
 
