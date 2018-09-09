@@ -2513,10 +2513,8 @@ body, html {
   border-radius: 4px;
   cursor: pointer;
   overflow: hidden;
-  background-color: #FFFFFF;
   margin: 10px;
   padding: 20px;
-  background-repeat: no-repeat;
   color: #091E42;
   animation: fGLASt 0.6s cubic-bezier(0.15, 1, 0.33, 1) forwards;
   box-sizing: border-box;
@@ -2525,9 +2523,8 @@ body, html {
   box-shadow: 0 1px 1px rgba(23, 43, 77, 0.2), 0 0 0.5px 0 rgba(23, 43, 77, 0.25);
   transition: all 0.3s cubic-bezier(0.15, 1, 0.33, 1);
   animation-delay: 0.5s;
-  background-image: none;
   background-size: contain;
-  background-position: bottom; }
+  background: #FFFFFF none no-repeat bottom; }
 
 .page {
   display: flex;
@@ -2614,6 +2611,16 @@ body, html {
 
 .table-of-content {
   min-width: 300px;
-  padding: 3rem 10px; }
+  padding: 3rem 10px;
+  font-size: 15px; }
+  .table-of-content .toc li {
+    padding: 3px 2px; }
+    .table-of-content .toc li > ul > li {
+      font-size: 14px;
+      padding-left: 10px; }
+  .table-of-content .toc a {
+    color: #4a6696df; }
+    .table-of-content .toc a:hover, .table-of-content .toc a:active {
+      color: #091E42; }
 
 /*# sourceMappingURL=styles.css.map*/
