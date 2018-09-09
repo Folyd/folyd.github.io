@@ -2532,6 +2532,11 @@ body, html {
   min-height: 100%;
   width: 100%; }
 
+.navigator-container {
+  width: 320px;
+  min-width: 320px;
+  position: relative; }
+
 .navigator {
   width: inherit;
   height: 100vh;
@@ -2610,9 +2615,9 @@ body, html {
   z-index: 1; }
 
 .table-of-content {
-  min-width: 300px;
-  padding: 3rem 10px;
-  font-size: 15px; }
+  min-width: 240px;
+  padding: 3rem 0;
+  font-size: 14px; }
   .table-of-content .toc li {
     padding: 3px 2px; }
     .table-of-content .toc li > ul > li {
@@ -2622,5 +2627,13 @@ body, html {
     color: #4a6696df; }
     .table-of-content .toc a:hover, .table-of-content .toc a:active {
       color: #091E42; }
+
+@media screen and (max-width: 768px) {
+  .navigator-container {
+    display: none; } }
+
+@media screen and (max-width: 840px) {
+  .table-of-content {
+    display: none; } }
 
 /*# sourceMappingURL=styles.css.map*/
