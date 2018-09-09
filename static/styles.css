@@ -2484,11 +2484,11 @@ a.has-text-danger:hover, a.has-text-danger:focus {
   letter-spacing: 0; }
 
 .text {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 26px;
   font-family: 'Open Sans', sans-serif;
   font-weight: normal;
-  color: #6D7D93;
+  color: #505b6f;
   letter-spacing: 0; }
 
 .subtext {
