@@ -168,7 +168,7 @@ span {
   font-weight: inherit; }
 
 strong {
-  color: #363636;
+  color: #315c9a;
   font-weight: 700; }
 
 pre {
@@ -192,7 +192,7 @@ table th {
   vertical-align: top; }
 
 table th {
-  color: #363636; }
+  color: #315c9a; }
 
 .is-clearfix::after {
   clear: both;
@@ -1824,7 +1824,7 @@ a.has-text-danger:hover, a.has-text-danger:focus {
 .content h4,
 .content h5,
 .content h6 {
-  color: #363636;
+  color: #315c9a;
   font-weight: 600;
   line-height: 1.125; }
 
@@ -1914,16 +1914,16 @@ a.has-text-danger:hover, a.has-text-danger:focus {
     padding: 0.5em 0.75em;
     vertical-align: top; }
   .content table th {
-    color: #363636;
+    color: #315c9a;
     text-align: left; }
   .content table thead td,
   .content table thead th {
     border-width: 0 0 2px;
-    color: #363636; }
+    color: #315c9a; }
   .content table tfoot td,
   .content table tfoot th {
     border-width: 2px 0 0;
-    color: #363636; }
+    color: #315c9a; }
   .content table tbody tr:last-child td,
   .content table tbody tr:last-child th {
     border-bottom-width: 0; }
@@ -2629,6 +2629,8 @@ body, html {
       color: #091E42; }
 
 @media screen and (max-width: 768px) {
+  .body-container {
+    padding: 2rem; }
   .navigator-container {
     display: none; } }
 
