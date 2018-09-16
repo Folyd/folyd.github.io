@@ -2606,6 +2606,13 @@ body, html {
     font-size: 14px; }
     .navigator .tabs-list-item:hover, .navigator .tabs-list-item.active {
       background-color: rgba(9, 30, 66, 0.04); }
+  .navigator #close-menu-button {
+    display: none;
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    padding: 5px;
+    cursor: pointer; }
 
 .header-navigator {
   position: fixed;
@@ -2649,6 +2656,8 @@ body, html {
     padding: 5rem 2rem 2rem; }
   .navigator-container {
     display: none; }
+    .navigator-container #close-menu-button {
+      display: block; }
   .header-navigator {
     display: flex;
     flex-direction: row;
