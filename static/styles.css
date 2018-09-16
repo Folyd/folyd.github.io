@@ -2589,9 +2589,11 @@ body, html {
     display: flex;
     flex-direction: column;
     flex: 1 1 100%;
-    overflow: scroll;
+    overflow: auto;
     position: relative;
     margin-top: 25px; }
+    .navigator .tabs-list::-webkit-scrollbar {
+      display: none; }
   .navigator .tabs-list-item {
     align-items: center;
     border-radius: 3px;
