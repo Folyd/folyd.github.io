@@ -2606,6 +2606,20 @@ body, html {
     .navigator .tabs-list-item:hover, .navigator .tabs-list-item.active {
       background-color: rgba(9, 30, 66, 0.04); }
 
+.header-navigator {
+  position: fixed;
+  top: 0;
+  padding: 10px;
+  height: auto;
+  background-color: #1c45a5;
+  color: #FFFFFF;
+  width: 100%;
+  display: none;
+  z-index: 99999999; }
+  .header-navigator > svg {
+    position: absolute;
+    left: 10px; }
+
 .body-container {
   flex: 1 1 auto;
   padding: 3rem; }
@@ -2630,9 +2644,14 @@ body, html {
 
 @media screen and (max-width: 768px) {
   .body-container {
-    padding: 2rem; }
+    padding: 5rem 2rem 2rem; }
   .navigator-container {
-    display: none; } }
+    display: none; }
+  .header-navigator {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center; } }
 
 @media screen and (max-width: 840px) {
   .table-of-content {
