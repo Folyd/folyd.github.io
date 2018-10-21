@@ -2554,7 +2554,8 @@ body, html {
     box-sizing: border-box;
     flex-direction: column;
     padding: 16px 0;
-    width: 70px; }
+    width: 70px;
+    min-width: 70px; }
   .navigator .nav {
     margin-top: 40px;
     text-align: center;
@@ -2604,7 +2605,6 @@ body, html {
     color: #42526E;
     padding: 8px;
     text-decoration: none;
-    height: 36px;
     font-size: 14px; }
     .navigator .tabs-list-item:hover, .navigator .tabs-list-item.active {
       background-color: rgba(9, 30, 66, 0.04); }
