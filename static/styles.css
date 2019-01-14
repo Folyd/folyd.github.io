@@ -2653,6 +2653,14 @@ body, html {
     .table-of-content .toc a:hover, .table-of-content .toc a:active {
       color: #091E42; }
 
+.sticky {
+  position: sticky;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  top: 15px; }
+
 @media screen and (max-width: 768px) {
   .body-container {
     padding: 5rem 2rem 2rem; }
