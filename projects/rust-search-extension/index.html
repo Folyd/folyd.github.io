@@ -1,0 +1,278 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#1c45a5">
+<link rel="stylesheet" href="/static/styles.css?h=f108643e">
+<link rel="stylesheet" href="/static/pygments.css">
+<title>Rust Search Extension — Folyd</title>
+
+<body>
+<div class="page">
+    <div class="header-navigator">
+        <div id="menu-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" focusable="false" role="presentation">
+                <path d="M5 15h14v2H5zm0-8h14v2H5zm0 4h14v2H5z" fill="currentColor" fill-rule="evenodd"></path>
+            </svg>
+        </div>
+        <a href="/">
+            <img src="/img/logo-white.svg" alt="folyd" style="height: 14px">
+        </a>
+    </div>
+
+    <div class="navigator-container">
+        <div class="navigator">
+            <div id="close-menu-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" focusable="false" role="presentation">
+                    <path d="M12 10.586L6.707 5.293a1 1 0 0 0-1.414 1.414L10.586 12l-5.293 5.293a1 1 0 0 0 1.414 1.414L12 13.414l5.293 5.293a1 1 0 0 0 1.414-1.414L13.414 12l5.293-5.293a1 1 0 1 0-1.414-1.414L12 10.586z"
+                          fill="currentColor">
+                    </path>
+                </svg>
+            </div>
+            <div class="menu has-background-primary">
+                <a href="/">
+                    <img src="/img/logo-white.svg" alt="folyd" style="margin:15px 0;height:12px;">
+                </a>
+                <nav class="nav">
+                    
+                    <a 
+                       href="/blog/" title="Blog - What I think and wrote">
+                        <img class="nav-image-item" src="/img/icon-blog.svg?h=8a78423e" alt="">
+                    </a>
+                    
+                    <a  class="active" 
+                       href="/projects/" title="Projects - What I built and created">
+                        <img class="nav-image-item" src="/img/icon-project.svg?h=033d057d" alt="">
+                    </a>
+                    
+                    <a 
+                       href="/about/" title="About - Who is me and how to contact me">
+                        <img class="nav-image-item" src="/img/icon-about.svg?h=700c2d4e" alt="">
+                    </a>
+                    
+                </nav>
+            </div>
+            
+  
+  
+    <div class="tabs-container">
+    <div class="tabs">
+        <div class="tabs-menu">
+            <span>
+                <img src="/img/p.png?h=fe8d3a4e" alt="" 
+                     style="vertical-align: middle;margin-right:8px">
+            </span>
+            <span class="subtitle">Projects</span>
+        </div>
+        <div class="tabs-list">
+            
+                
+                    
+                
+                <a class="tabs-list-item" href="/projects/anyshortcut/">
+                    Anyshortcut
+                </a>
+            
+                
+                    
+                
+                <a class="tabs-list-item" href="/projects/paybase/">
+                    Paybase
+                </a>
+            
+                 
+                    
+                
+                <a class="tabs-list-item active" href="/projects/rust-search-extension/">
+                    Rust Search Extension
+                </a>
+            
+        </div>
+    </div>
+</div>
+  
+
+        </div>
+    </div>
+
+
+    <div class="body-container content">
+        
+        <div class="body text">
+            
+                <div class="heading">Rust Search Extension</div>
+    
+    <br>
+    <p><img src="https://github.com/Folyd/rust-search-extension/raw/master/assets/rustacean.gif" alt=""></p>
+<p><img src="https://img.shields.io/chrome-web-store/v/ennpfpdlaclocpomkiablnmbppdnlhoh.svg" alt="Chrome Web Store">
+<img src="https://img.shields.io/amo/v/rust-search-extension?color=%2320123A" alt="Mozilla Add-on">
+<a href="https://github.com/Folyd/rust-search-extension/blob/master/LICENSE-MIT"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license-mit"></a>
+<a href="https://github.com/Folyd/rust-search-extension/blob/master/LICENSE-APACHE"><img src="https://img.shields.io/badge/license-Apache-yellow.svg" alt="license-apache"></a>
+<img src="https://github.com/folyd/rust-search-extension/workflows/build/badge.svg" alt="Build Status"></p>
+<p>🦀 A handy browser extension to search crates and docs in the address bar (omnibox).</p>
+<p><a href="https://github.com/Folyd/rust-search-extension">https://github.com/Folyd/rust-search-extension</a></p>
+<h2 id="installation">Installation</h2><ul>
+<li><p><a href="https://chrome.google.com/webstore/detail/rust-search-extension/ennpfpdlaclocpomkiablnmbppdnlhoh">Chrome Web Store</a></p>
+</li>
+<li><p><a href="https://addons.mozilla.org/en-US/firefox/addon/rust-search-extension/">Firefox</a></p>
+</li>
+</ul>
+<h2 id="features">Features</h2><ul>
+<li>Search Primitive Types and Modules</li>
+<li>Search Structs, Traits and Enums</li>
+<li>Search Functions, Methods and Macros</li>
+<li>Search crates on <a href="https://crates.io">https://crates.io</a></li>
+<li>Search <a href="https://doc.rust-lang.org/error-index.html">Compiler Error Index</a> with error code</li>
+<li>Offline mode, search local Rust docs (<code>rustup docs --std</code>) (Some limitation on Firefox, see <a href="/projects/rust-search-extension/#caveats">Caveats</a>)</li>
+<li>Both Chrome and Firefox are supported</li>
+</ul>
+<h2 id="usages">Usages</h2><p>Input keyword <strong>rs</strong> in the address bar, press <code>Tab</code> or <code>Space</code> to activate the search bar. Then enter any word 
+you want to search, the extension will response the related search results instantly.</p>
+<p><img src="https://github.com/Folyd/rust-search-extension/raw/master/assets/demonstration.gif" alt="demonstration.gif"></p>
+<h2 id="how-the-extension-works">How the extension works</h2><h3 id="1.-build-search-index">1. Build <em>search index</em></h3><p>The raw <em>search index</em> was generated by <strong>rustc-doc</strong>. The most important function is <code>build_index()</code> which 
+located at <a href="https://github.com/rust-lang/rust/blob/master/src/librustdoc/html/render/cache.rs">librustdoc/html/render/cache.rs</a>.</p>
+<p>The final <em>search index</em> is an object array like this:</p>
+<div class="hll"><pre><span></span><span class="kd">var</span> <span class="nx">searchIndex</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nx">crate</span><span class="o">:</span> <span class="s2">&quot;std&quot;</span><span class="p">,</span>
+      <span class="nx">desc</span><span class="o">:</span> <span class="s2">&quot;A hash map implemented with linear probing and Robin Hood bucket stealing.&quot;</span><span class="p">,</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;HashMap&quot;</span><span class="p">,</span>
+      <span class="nx">parent</span><span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
+      <span class="nx">path</span><span class="o">:</span> <span class="s2">&quot;std::collections&quot;</span><span class="p">,</span>
+      <span class="nx">ty</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="kc">null</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nx">crate</span><span class="o">:</span> <span class="s2">&quot;std&quot;</span><span class="p">,</span>
+      <span class="nx">desc</span><span class="o">:</span> <span class="s2">&quot;Applies function to the elements of iterator and returns the first non-none result.&quot;</span><span class="p">,</span>
+      <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;find_map&quot;</span><span class="p">,</span>
+      <span class="nx">parent</span><span class="o">:</span> <span class="p">{</span><span class="nx">ty</span><span class="o">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;Iterator&quot;</span><span class="p">},</span>
+      <span class="nx">path</span><span class="o">:</span> <span class="s2">&quot;std::iter&quot;</span><span class="p">,</span>
+      <span class="nx">ty</span><span class="o">:</span> <span class="mi">11</span><span class="p">,</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="p">[[</span><span class="s2">&quot;self&quot;</span><span class="p">],[</span><span class="s2">&quot;f&quot;</span><span class="p">]]</span>
+    <span class="p">},</span>
+    <span class="p">...</span>
+<span class="p">];</span>
+</pre></div>
+<h3 id="2.-build-search-words-array-based-on-search-index">2. Build <em>search words array</em> based on <em>search index</em></h3><p>The <em>search words array</em> is the list of search words to query against which build from the raw <em>search index</em>.
+It's just a plain name array of every Rust structs, traits, enums, functions, methods, macros, etc.</p>
+<div class="hll"><pre><span></span><span class="kd">var</span> <span class="nx">searchWords</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;result&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;option&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;hashmap&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;hashset&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;clone&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;copy&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;display&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;debug&quot;</span><span class="p">,</span>
+    <span class="p">...</span>
+<span class="p">];</span>
+</pre></div>
+<h3 id="3.-search-keyword-in-search-words-array">3. Search keyword in <em>search words array</em></h3><p>Using <em>Levenshtein distance</em> algorithm to search matched words, the max Levenshtein distance is 2.</p>
+<div class="hll"><pre><span></span><span class="c1">// Max levenshtein distance.</span>
+<span class="kd">var</span> <span class="nx">MAX_LEV_DISTANCE</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+<h3 id="4.-sort-search-result">4. Sort <em>search result</em></h3><p>Sort search result according to <em>Levenshtein distance</em>, lexicographical and others metrics.</p>
+<h3 id="5.-transform-search-result-to-suggestion-result-to-show-in-the-address-bar">5. Transform <em>search result</em> to <em>suggestion result</em> to show in the address bar</h3><p>Mapping the <em>search word</em> and <em>search index</em> to generate the <em>search result</em>, build Rust doc link for each result item.</p>
+<div class="hll"><pre><span></span><span class="kd">var</span> <span class="nx">suggestResults</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="nx">content</span><span class="o">:</span> <span class="s2">&quot;https://doc.rust-lang.org/std/ops/trait.Deref.html&quot;</span><span class="p">,</span>
+      <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;std::ops::&lt;match&gt;Deref&lt;/match&gt; - &lt;dim&gt;Used for immutable dereferencing operations, like `*v`.&lt;/dim&gt;&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="nx">content</span><span class="o">:</span> <span class="s2">&quot;https://doc.rust-lang.org/std/ops/trait.Deref.html#tymethod.deref&quot;</span><span class="p">,</span>
+      <span class="nx">description</span><span class="o">:</span> <span class="s2">&quot;std::ops::Deref::&lt;match&gt;deref&lt;/match&gt; - &lt;dim&gt;Dereferences the value.&lt;/dim&gt;&quot;</span>
+    <span class="p">},</span>
+    <span class="p">...</span>
+<span class="p">];</span>
+</pre></div>
+<h2 id="caveats">Caveats</h2><h3 id="1.-why-local-file:-rust-doc-not-work-properly-on-firefox?">1. Why local <code>file:</code> rust doc not work properly on Firefox?</h3><p>For security reasons, in Firefox, <code>file:</code> URLs is an unprivileged URL, accessing to those unprivileged URLs are prohibited. 
+See the <a href="https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs/create">MDN documentation</a> for more detail.</p>
+<h3 id="2.-any-workaround-to-support-offline-mode-on-firefox?">2. Any workaround to support offline mode on Firefox?</h3><p>Sure. A good choice is use http server! For example using python <strong>SimpleHTTPServer</strong> module:</p>
+<div class="hll"><pre><span></span>$ <span class="nb">cd</span> your-rust-doc-directory
+$ python -m http.server
+Serving HTTP on <span class="m">0</span>.0.0.0 port <span class="m">8000</span> <span class="o">(</span>http://0.0.0.0:8000/<span class="o">)</span> ...
+</pre></div>
+<p>Then set <code>http://0.0.0.0:8000</code> as your local doc path.</p>
+
+            
+        </div>
+    </div>
+    
+    
+    
+    <div class="table-of-content">
+        <div class="sticky">
+            <b class="pipe-title">Table of content</b>
+            <ul class="toc">
+                
+                <li>
+                    <a href="#installation">Installation</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#features">Features</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#usages">Usages</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#how-the-extension-works">How the extension works</a>
+                    
+                    <ul>
+                <li>
+                    <a href="#1.-build-search-index">1. Build <em>search index</em></a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#2.-build-search-words-array-based-on-search-index">2. Build <em>search words array</em> based on <em>search index</em></a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#3.-search-keyword-in-search-words-array">3. Search keyword in <em>search words array</em></a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#4.-sort-search-result">4. Sort <em>search result</em></a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#5.-transform-search-result-to-suggestion-result-to-show-in-the-address-bar">5. Transform <em>search result</em> to <em>suggestion result</em> to show in the address bar</a>
+                    
+                </li>
+                </ul>
+                    
+                </li>
+                
+                <li>
+                    <a href="#caveats">Caveats</a>
+                    
+                    <ul>
+                <li>
+                    <a href="#1.-why-local-file:-rust-doc-not-work-properly-on-firefox?">1. Why local <code>file:</code> rust doc not work properly on Firefox?</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#2.-any-workaround-to-support-offline-mode-on-firefox?">2. Any workaround to support offline mode on Firefox?</a>
+                    
+                </li>
+                </ul>
+                    
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+    
+</div>
+<script src="/static/app.js?h=cdfdd1fc"></script>
+</body>
