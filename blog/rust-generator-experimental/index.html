@@ -185,7 +185,7 @@
 <p>async/await语法稳定的时候为了解决自引用的问题花了很大的心思设计Pin和Unpin等概念。如果Generator默认返回迭代器Iterator的话，我们依然会碰到了自引用的问题。因为<code>Iterator::next</code>在1.0就稳定了，我们不可能再去修改它的API来让迭代器支持自引用。如果不考虑性能，目前最简单粗暴的方法是可以把Generator的每个state装箱到堆上。</p>
 <p>当然如果我们不支持自引用，就可以让generator支持零开销（zero cost），而且无船同志也大胆的推测（hypothesis）：也许我们确实不需要一个支持自引用的Generator。</p>
 <p>最后，无船同志强调，这几个理念仅仅是实验性的，而且也有可能试一次失败的尝试。</p>
-<p>以上是我了解完Propane之后结合无船的博客整理的文章，Propane的代码也很简洁，大家可以去Github查看。</p>
+<p>以上是我了解完Propane之后结合无船的博客整理的文章，Propane的代码也很简洁，大家可以去<a href="https://github.com/withoutboats/propane">Github</a>查看。</p>
 <p>链接：<a href="https://without.boats/blog/propane/">Propane: an experimental generator syntax for Rust</a></p>
 
             

@@ -4,7 +4,7 @@
 <meta name="theme-color" content="#1c45a5">
 <link rel="stylesheet" href="/static/styles.css?h=bed45acd">
 <link rel="stylesheet" href="/static/pygments.css">
-<title>Go Search Extension — Folyd</title>
+<title>Huhu.io — Folyd</title>
 
 <body>
 <div class="page">
@@ -86,17 +86,17 @@
                     Rust Search Extension
                 </a>
             
-                 
+                
                     
                 
-                <a class="tabs-list-item active" href="/projects/go-search-extension/">
+                <a class="tabs-list-item" href="/projects/go-search-extension/">
                     Go Search Extension
                 </a>
             
-                
+                 
                     
                 
-                <a class="tabs-list-item" href="/projects/huhu.io">
+                <a class="tabs-list-item active" href="/projects/huhu.io">
                     Huhu.io
                 </a>
             
@@ -113,49 +113,17 @@
         
         <div class="body text">
             
-                <div class="heading">Go Search Extension</div>
+                <div class="heading">Huhu.io</div>
     
     <br>
-    <p><img src="https://github.com/huhu/go-search-extension/raw/master/gopher.svg" alt=""></p>
-<p>The ultimate search extension for Golang!</p>
-<p><img src="https://img.shields.io/chrome-web-store/v/epanejkfcekejmmfbcpbcbigfpefbnlb.svg" alt="Chrome Web Store">
-<img src="https://img.shields.io/amo/v/go-search-extension?color=%2320123A" alt="Mozilla Add-on">
-<a href="https://github.com/huhu/go-search-extension/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license-mit"></a></p>
-<p><strong>Go Search Extension</strong> is a handy browser plugin to help Golang developers search docs and packages in the address bar instantly.</p>
-<h3 id="github">Github</h3><p><a href="https://github.com/huhu/go-search-extension">https://github.com/huhu/go-search-extension</a></p>
-<h3 id="installation">Installation</h3><ul>
-<li><p><a href="https://chrome.google.com/webstore/detail/golang-search/epanejkfcekejmmfbcpbcbigfpefbnlb">Chrome Web Store</a></p>
-</li>
-<li><p><a href="https://addons.mozilla.org/en-US/firefox/addon/go-search-extension/">Firefox</a></p>
-</li>
-<li><p><a href="https://microsoftedge.microsoft.com/addons/detail/ebibclchdmagkhopidkjckjkbhghfehh">Microsoft Edge</a></p>
-</li>
-</ul>
+    <p><a href="https://huhu.io">https://huhu.io</a></p>
+<p>Build product the developer want.</p>
 
             
         </div>
     </div>
     
     
-    
-    <div class="table-of-content">
-        <div class="sticky">
-            <b class="pipe-title">Table of content</b>
-            <ul class="toc">
-                
-                <li>
-                    <a href="#github">Github</a>
-                    
-                </li>
-                
-                <li>
-                    <a href="#installation">Installation</a>
-                    
-                </li>
-                
-            </ul>
-        </div>
-    </div>
     
 </div>
 <script src="/static/app.js?h=cdfdd1fc"></script>
