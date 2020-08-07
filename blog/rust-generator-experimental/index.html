@@ -113,7 +113,7 @@
         </div>
     
     <br>
-    <p>众所周知，Rust的Generator一直没有稳定，主要原因是Generator仍然有许多设计上的问题没有明确，所以无船同志写了一个名字叫<strong>Propane</strong>的新crate，旨在nightly上实验性的探索Rust Generator未来语法的可能性。</p>
+    <h1 id="">现状</h1><p>众所周知，Rust的Generator一直没有稳定，主要原因是Generator仍然有许多设计上的问题没有明确，所以无船同志写了一个名字叫<strong>Propane</strong>的新crate，旨在nightly上实验性的探索Rust Generator未来语法的可能性。</p>
 <blockquote><p>Propane中文翻译：丙烷，无船同志取名向来看起来比较奇怪，不知道是否有其他用意</p>
 </blockquote>
 <p>目前nightly的generator只能写成闭包的形式（官方称作generator literal），比如这样：</p>
@@ -139,7 +139,7 @@
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>编译器会报<a href="https://doc.rust-lang.org/nightly/error-index.html#E0627">E0627 A yield expression was used outside of the generator literal.</a>这个错。也就是目前的generator不支持以函数的方式写。</p>
-<p>前面说了，generator很多语法没有稳定甚至不支持，主要原因还是很多设计理念没有明确，所以Propane这个库先迈出了第一步。</p>
+<h1 id="propane">Propane</h1><p>前面说了，generator很多语法没有稳定甚至不支持，主要原因还是很多设计理念没有明确，所以Propane这个库先迈出了第一步。</p>
 <div class="hll"><pre><span></span><span class="cp">#![feature(generators, generator_trait, try_trait)]</span><span class="w"></span>
 
 <span class="cp">#[propane::generator]</span><span class="w"></span>
@@ -175,12 +175,12 @@
 </pre></div>
 <p>Propane提供了一个<code>generator</code>宏，可以让我们以函数的方式写Generator。当然Propane的主要目的是为了验证两个主要的设计理念是否合理：</p>
 <ul>
-<li>1) 默认返回Iterator；return关键字可以终止generator，但只支持返回<code>()</code>; generator中的<code>?</code>表达式的默认行为和普通函数有差别</li>
+<li><strong>1) 默认返回Iterator；return关键字可以终止generator，但只支持返回<code>()</code>; generator中的<code>?</code>表达式的默认行为和普通函数有差别</strong></li>
 </ul>
 <p>用Propane的<code>generator</code>宏标记的函数是一个返回<code>impl Iterator</code>的生成器，生成器中依然可以使用<code>return</code>关键字来终止，但是不能返回其他类型的值，只支持返回<code>()</code>。</p>
 <p>生成器中支持<code>?</code>表达式，但是与普通函数中不同的是，如果生成器yield是一个<code>Result</code>类型，当<code>?</code>表达式碰到错误情况时会把错误yield出去，而不是return出去。然后在下一次resume直接退出生成器。</p>
 <ul>
-<li>2) 不支持自引用（Self-referential）</li>
+<li><strong>2) 不支持自引用(Self-referential)</strong></li>
 </ul>
 <p>async/await语法稳定的时候为了解决自引用的问题花了很大的心思设计Pin和Unpin等概念。如果Generator默认返回迭代器Iterator的话，我们依然会碰到了自引用的问题。因为<code>Iterator::next</code>在1.0就稳定了，我们不可能再去修改它的API来让迭代器支持自引用。如果不考虑性能，目前最简单粗暴的方法是可以把Generator的每个state装箱到堆上。</p>
 <p>当然如果我们不支持自引用，就可以让generator支持零开销（zero cost），而且无船同志也大胆的推测（hypothesis）：也许我们确实不需要一个支持自引用的Generator。</p>
@@ -193,6 +193,25 @@
     </div>
     
     
+    
+    <div class="table-of-content">
+        <div class="sticky">
+            <b class="pipe-title">Table of content</b>
+            <ul class="toc">
+                
+                <li>
+                    <a href="#">现状</a>
+                    
+                </li>
+                
+                <li>
+                    <a href="#propane">Propane</a>
+                    
+                </li>
+                
+            </ul>
+        </div>
+    </div>
     
 </div>
 <script src="/static/app.js?h=cdfdd1fc"></script>
