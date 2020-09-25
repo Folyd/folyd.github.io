@@ -113,7 +113,7 @@
         </div>
     
     <br>
-    <h1 id="">现状</h1><p>众所周知，Rust的Generator一直没有稳定，主要原因是Generator仍然有许多设计上的问题没有明确，所以无船同志写了一个名字叫<strong>Propane</strong>的新crate，旨在nightly上实验性的探索Rust Generator未来语法的可能性。</p>
+    <h1 id="xian-zhuang">现状</h1><p>众所周知，Rust的Generator一直没有稳定，主要原因是Generator仍然有许多设计上的问题没有明确，所以无船同志写了一个名字叫<strong>Propane</strong>的新crate，旨在nightly上实验性的探索Rust Generator未来语法的可能性。</p>
 <blockquote><p>Propane中文翻译：丙烷，无船同志取名向来看起来比较奇怪，不知道是否有其他用意</p>
 </blockquote>
 <p>目前nightly的generator只能写成闭包的形式（官方称作generator literal），比如这样：</p>
@@ -129,7 +129,7 @@
 <p>如果你写成这样的话：</p>
 <div class="hll"><pre><span></span><span class="cp">#![feature(generators, generator_trait)]</span><span class="w"></span>
 
-<span class="k">fn</span> <span class="nf">fake_generator</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="nb">&#39;static</span><span class="w"> </span><span class="kt">str</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
+<span class="k">fn</span> <span class="nf">fake_generator</span><span class="p">()</span><span class="w"> </span>-&gt; <span class="kp">&amp;</span><span class="o">&#39;</span><span class="nb">static</span> <span class="kt">str</span> <span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="kr">yield</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w"></span>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;foo&quot;</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
@@ -200,7 +200,7 @@
             <ul class="toc">
                 
                 <li>
-                    <a href="#">现状</a>
+                    <a href="#xian-zhuang">现状</a>
                     
                 </li>
                 
