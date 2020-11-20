@@ -12,6 +12,7 @@
   <url><loc>https://folyd.com/about/introduction/</loc></url>
   <url><loc>https://folyd.com/about/resume/</loc></url>
   <url><loc>https://folyd.com/blog/</loc></url>
+  <url><loc>https://folyd.com/blog/rust-pin-unpin/</loc></url>
   <url><loc>https://folyd.com/blog/rust-generator-experimental/</loc></url>
   <url><loc>https://folyd.com/blog/moonlit-sailor/</loc></url>
   <url><loc>https://folyd.com/blog/anyshortcut-cli-and-rust/</loc></url>
