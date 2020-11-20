@@ -158,7 +158,7 @@
 <span class="w">    </span><span class="p">}</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
-<p>我先来从宏观层面解读一下。<strong>Pin</strong>是一个这样的智能指针，他内部包裹了另外一个指针<strong>P</strong>，并且只要<strong>P</strong>指针指向的内容（我们称为<strong>T</strong>）没有实现<strong>Unpin</strong>，则可以保证T永远不会被移动（move）。<strong>Pin</strong>这个单词也很形象的表示Pin就像钉子一样可以把T钉住。所以<strong>Pin</strong>一般来说用<code>Pin&lt;P&lt;T&gt;&gt;</code>这种方式表示（P是Pointer的缩写，T是Type的缩写）。这个定义初看有点绕，我们来划几个重点：</p>
+<p>我先来从宏观层面解读一下。<strong>Pin</strong>是一个这样的智能指针，他内部包裹了另外一个指针<strong>P</strong>，并且只要<strong>P</strong>指针指向的内容（我们称为<strong>T</strong>）没有实现<strong>Unpin</strong>，则可以保证<strong>T</strong>永远不会被移动（move）。<strong>Pin</strong>这个单词也很形象的表示<strong>Pin</strong>就像钉子一样可以把<strong>T</strong>钉住。所以<strong>Pin</strong>一般来说用<code>Pin&lt;P&lt;T&gt;&gt;</code>这种方式表示（P是Pointer的缩写，T是Type的缩写）。这个定义初看有点绕，我们来划几个重点：</p>
 <ul>
 <li><strong>Pin</strong>自身是一个智能指针。为什么呢？因为他<strong>impl</strong>了<strong>Deref</strong>和<strong>DerefMut</strong>。</li>
 <li><strong>Pin</strong>包裹的内容只能是指针，不能是其他普通类型。比如<code>Pin&lt;u32&gt;</code>就没有意义。</li>
@@ -264,7 +264,7 @@ a: test1, b: I've totally changed now!
 </ul>
 </blockquote>
 <p>所以我们来找一下导致这个问题的根源，然后想办法从根源上解决它！</p>
-<h3 id="gen-yuan-shi-shi-yao">根源是什么？</h3><p>我们发现上面的例子最关键的一行代码是<code>std::mem::swap(&amp;mut test1, &amp;mut test2)</code>，就是它导致了我们自引用结构体失效引发了内存安全问题。所以我们是不是只要避免这个<code>swap()</code>函数应用到我们自引用结构体上就行？可是怎么取避免呢？我们来看一下<code>swap()</code>方法的定义：</p>
+<h3 id="gen-yuan-shi-shi-yao">根源是什么？</h3><p>我们发现上面的例子最关键的一行代码是<code>std::mem::swap(&amp;mut test1, &amp;mut test2)</code>，就是它导致了我们自引用结构体失效引发了内存安全问题。所以我们是不是只要避免这个<code>swap()</code>函数应用到我们自引用结构体上就行？可是怎么去避免呢？我们来看一下<code>swap()</code>方法的定义：</p>
 <div class="hll"><pre><span></span><span class="cp">#[inline]</span><span class="w"></span>
 <span class="cp">#[stable(feature = </span><span class="s">&quot;rust1&quot;</span><span class="cp">, since = </span><span class="s">&quot;1.0.0&quot;</span><span class="cp">)]</span><span class="w"></span>
 <span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">swap</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">T</span><span class="p">,</span><span class="w"> </span><span class="n">y</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">T</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -279,7 +279,7 @@ a: test1, b: I've totally changed now!
 <p>还是以Test为例，它自身没办法限制自己不能可变借用，因为我们直接用<code>&amp;mut Test{...}</code>就可以轻松拿到。那从标准库中去找找，<code>Box&lt;T&gt;</code>呢？先不考虑它性能问题，我们把我们的结构体<strong>T</strong>包裹在<strong>Box</strong>中，看<strong>Box</strong>能不能保证不暴露<code>&amp;mut T</code>出去。看一下API文档，很遗憾不能。<a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.leak">Box::leak()</a>返回值就是<code>&amp;mut T</code>，更甚者<strong>Box</strong> <strong>impl</strong>了<strong>DerefMut</strong>，就算不用<code>leak()</code>我们也可以通过<code>* &amp;mut Box&lt;T&gt;</code>解引用轻松拿到<code>&amp;mut T</code>！</p>
 <p>不用找了，在<strong>Pin</strong>之前的标准库中确实没有这样的API能够防止在Safe Rust下不暴露<code>&amp;mut T</code>。</p>
 <p>所以，接下来是该<strong>Pin</strong>登场的时候了！</p>
-<h3 id="pinshan-liang-deng-chang">Pin闪亮登场</h3><p>我们找到了问题的根源在哪，<strong>Pin</strong>就是从根源上解决这个问题的。现在我们很清晰了，似乎是不是可以用一句话概括：Pin就是一个不会让你在Safe Rust暴露可变借用<strong>&amp;mut</strong>的智能指针?</p>
+<h3 id="pinshan-liang-deng-chang">Pin闪亮登场</h3><p>我们找到了问题的根源在哪，<strong>Pin</strong>就是从根源上解决这个问题的。现在我们很清晰了，似乎是不是可以用一句话概括：<strong>Pin</strong>就是一个不会让你在Safe Rust暴露可变借用<strong>&amp;mut</strong>的智能指针?</p>
 <p>答案是：不全正确。这就是<strong>Pin</strong>概念起初让大家一脸懵逼的地方。下面让<strong>Pin</strong>自己来解答大家的疑惑，<strong>Pin</strong>说：“你们不是想让我保证被我包裹的指针<code>P&lt;T&gt;</code>永远钉住不让move吗？我可以答应，但我有一个原则。那就是我永远不能钉住持有通行证的朋友，这张通行证就是<strong>Unpin</strong>。如果没有这张通行证，请放心，我会把你钉得死死的！”</p>
 <p>举个例子。比如我是<code>Pin</code>，你是<code>P&lt;T&gt;</code>，如果你<strong>impl</strong>了<strong>Unpin</strong>，我会提供两种办法让你在Safe Rust下拿到<code>&amp;mut T</code>：</p>
 <ul>
@@ -501,7 +501,7 @@ a: test1, b: I've totally changed now!
 <span class="w">    </span><span class="n">println</span><span class="o">!</span><span class="p">(</span><span class="s">&quot;a: {}, b: {}&quot;</span><span class="p">,</span><span class="n">test2</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">a</span><span class="p">(),</span><span class="w"> </span><span class="n">test2</span><span class="p">.</span><span class="n">as_ref</span><span class="p">().</span><span class="n">b</span><span class="p">());</span><span class="w"></span>
 <span class="p">}</span><span class="w"></span>
 </pre></div>
-<p>这里使用<code>Box::pin()</code>构造了一个把Test钉在了栈上。取消注释任意一行都会编译不通过，因为Test是<strong>!Unpin</strong>的。</p>
+<p>这里使用<code>Box::pin()</code>把Test钉在了堆上。取消注释任意一行都会编译不通过，因为Test是<strong>!Unpin</strong>的。</p>
 <h4 id="future">Future</h4><div class="hll"><pre><span></span><span class="cp">#[stable(feature = </span><span class="s">&quot;futures_api&quot;</span><span class="cp">, since = </span><span class="s">&quot;1.36.0&quot;</span><span class="cp">)]</span><span class="w"></span>
 <span class="k">pub</span><span class="w"> </span><span class="k">trait</span><span class="w"> </span><span class="n">Future</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">    </span><span class="k">type</span> <span class="nc">Output</span><span class="p">;</span><span class="w"></span>
