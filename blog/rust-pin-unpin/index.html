@@ -170,7 +170,6 @@
 <h3 id="dao-di-shi-yao-shi-move">到底什么是move？</h3><p>根据官方定义：所有权转移的这个过程就是move。我们先看一个大家都非常熟悉的例子：</p>
 <div class="hll"><pre><span></span><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 <span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">s1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&quot;Hello&quot;</span><span class="p">);</span><span class="w"></span>
-<span class="w">  </span><span class="n">s1</span><span class="p">.</span><span class="n">push_str</span><span class="p">(</span><span class="o">&amp;</span><span class="s">&quot;Rust&quot;</span><span class="p">);</span><span class="w"></span>
 <span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="n">s2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s1</span><span class="p">;</span><span class="w"> </span><span class="c1">// s1的所有权转移给了s2，这里发生了move</span>
 <span class="w">  </span><span class="c1">// let s3 = s1; // s1的所有权以及转移走了，不能再move，否则会报错：error[E0382]: use of moved value: `s1`</span>
 <span class="p">}</span><span class="w"></span>
@@ -276,7 +275,7 @@ a: test1, b: I've totally changed now!
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <p>它的参数要求是可变借用<strong>&amp;mut</strong>，所以只要我们想办法让Safe Rust下不暴露可变借用即可！</p>
-<p>还是以Test为例，它自身没办法限制自己不能可变借用，因为我们直接用<code>&amp;mut Test{...}</code>就可以轻松拿到。那从标准库中去找找，<code>Box&lt;T&gt;</code>呢？先不考虑它性能问题，我们把我们的结构体<strong>T</strong>包裹在<strong>Box</strong>中，看<strong>Box</strong>能不能保证不暴露<code>&amp;mut T</code>出去。看一下API文档，很遗憾不能。<a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.leak">Box::leak()</a>返回值就是<code>&amp;mut T</code>，更甚者<strong>Box</strong> <strong>impl</strong>了<strong>DerefMut</strong>，就算不用<code>leak()</code>我们也可以通过<code>* &amp;mut Box&lt;T&gt;</code>解引用轻松拿到<code>&amp;mut T</code>！</p>
+<p>还是以Test为例，它自身没办法限制自己不能可变借用，因为我们直接用<code>&amp;mut Test{...}</code>就可以轻松拿到。那从标准库中去找找，<code>Box&lt;T&gt;</code>呢？先不考虑它性能问题，我们把结构体<strong>T</strong>包裹在<strong>Box</strong>中，看<strong>Box</strong>能不能保证不暴露<code>&amp;mut T</code>出去。看一下API文档，很遗憾不能。<a href="https://doc.rust-lang.org/std/boxed/struct.Box.html#method.leak">Box::leak()</a>返回值就是<code>&amp;mut T</code>，更甚者<strong>Box</strong> <strong>impl</strong>了<strong>DerefMut</strong>，就算不用<code>leak()</code>我们也可以通过<code>* &amp;mut Box&lt;T&gt;</code>解引用轻松拿到<code>&amp;mut T</code>！</p>
 <p>不用找了，在<strong>Pin</strong>之前的标准库中确实没有这样的API能够防止在Safe Rust下不暴露<code>&amp;mut T</code>。</p>
 <p>所以，接下来是该<strong>Pin</strong>登场的时候了！</p>
 <h3 id="pinshan-liang-deng-chang">Pin闪亮登场</h3><p>我们找到了问题的根源在哪，<strong>Pin</strong>就是从根源上解决这个问题的。现在我们很清晰了，似乎是不是可以用一句话概括：<strong>Pin</strong>就是一个不会让你在Safe Rust暴露可变借用<strong>&amp;mut</strong>的智能指针?</p>
@@ -369,7 +368,7 @@ a: test1, b: I've totally changed now!
 <li>如果<code>P&lt;T</code>&gt;符合<strong>!Unpin</strong>，那<code>P&lt;T&gt;</code>从被<strong>Pin</strong>包裹到被销毁，都要一直保证<code>P&lt;T&gt;</code>被钉住</li>
 </ul>
 </blockquote>
-<p>通过以上<strong>Pin</strong>的自述，我们再用一句话来总结：如果你实现了<strong>Unpin</strong>，Pin<strong>可以让你在</strong>Safe Rust下拿到<code>&amp;mut T</code>，否则会把你在Safe Rust下钉住（也就是拿不到<code>&amp;mut T</code>）。</p>
+<p>通过以上<strong>Pin</strong>的自述，我们再用一句话来总结：如果你实现了<strong>Unpin</strong>，<strong>Pin</strong>可以让你在Safe Rust下拿到<code>&amp;mut T</code>，否则会把你在Safe Rust下钉住（也就是拿不到<code>&amp;mut T</code>）。</p>
 <p>接下来我们使用<strong>Pin</strong>来修复一下上面自引用结构体的问题。</p>
 <h3 id="ru-he-gou-zao-yi-ge-pin">如何构造一个Pin</h3><p>首先我们要梳理清楚怎样把<code>P&lt;T&gt;</code>用<strong>Pin</strong>包裹起来，也就是怎样构造一个<strong>Pin</strong>。查看文档会发现主要有这几种方式：</p>
 <h4 id="pin-new">Pin::new()</h4><div class="hll"><pre><span></span><span class="k">impl</span><span class="o">&lt;</span><span class="n">P</span>: <span class="nc">Deref</span><span class="o">&lt;</span><span class="n">Target</span>: <span class="nb">Unpin</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">Pin</span><span class="o">&lt;</span><span class="n">P</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
@@ -406,7 +405,7 @@ a: test1, b: I've totally changed now!
 <span class="p">}</span><span class="w"></span>
 </pre></div>
 <h4 id="qi-ta">其他</h4><p>包括<code>Box::pin()</code>, <code>Rc::pin()</code>和<code>Arc::pin()</code>等，底层都是调用上面的<code>Pin::new_unchecked()</code>，不再阐述。</p>
-<h3 id="pinde-ying-yong">Pin的应用</h3><p><strong>Pin</strong>可以分为栈上还是堆上，取决于你要Pin的那个指针<strong>P</strong>是在栈上还是堆上。比如<code>Pin&lt;&amp;mut  T&gt;</code>是栈上，<code>Pin&lt;Box&lt;T&gt;&gt;</code>是在堆上。</p>
+<h3 id="pinde-ying-yong">Pin的应用</h3><p><strong>Pin</strong>可以分为栈上还是堆上，取决于你要<strong>Pin</strong>的那个指针<strong>P</strong>是在栈上还是堆上。比如<code>Pin&lt;&amp;mut  T&gt;</code>是栈上，<code>Pin&lt;Box&lt;T&gt;&gt;</code>是在堆上。</p>
 <h4 id="pindao-zhan-shang">Pin到栈上</h4><div class="hll"><pre><span></span><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">pin</span>::<span class="n">Pin</span><span class="p">;</span><span class="w"></span>
 <span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">marker</span>::<span class="n">PhantomPinned</span><span class="p">;</span><span class="w"></span>
 
@@ -549,7 +548,7 @@ a: test1, b: I've totally changed now!
 </pre></div>
 <p>划重点<code>impl&lt;T: Generator&lt;ResumeTy, Yield = ()&gt;&gt; !Unpin for GenFuture&lt;T&gt; {}</code>，只有亲眼所见才能让大家信服。</p>
 <h3 id="qi-ta">其他</h3><p><strong>Pin</strong>除了上面这些内容外还有其他几个概念，比如Pin projection, Structural pin和Non-structural pin，笔者自己用的也不多，详细可以看官方文档或查阅其他资料。</p>
-<p><a href="https://docs.rs/futures">future-rs</a>中还有不少和<strong>Pin</strong>有关的API，如果深入使用futures-rs的话，不可避免的需要频繁的和<strong>Pin</strong>打交道。</p>
+<p><a href="https://docs.rs/futures">futures-rs</a>中还有不少和<strong>Pin</strong>有关的API，如果深入使用futures-rs的话，不可避免的需要频繁的和<strong>Pin</strong>打交道。</p>
 <p><img src="/blog/rust-pin-unpin/features-rs.png" alt=""></p>
 <h3 id="zong-jie">总结</h3><p>下面是摘抄自官方Async Book上关于<strong>Pin</strong>的<a href="https://rust-lang.github.io/async-book/04_pinning/01_chapter.html#summary">黄金8条</a>作为总结，这些几乎就是<strong>Pin</strong> API的全部了。</p>
 <blockquote><ul>
